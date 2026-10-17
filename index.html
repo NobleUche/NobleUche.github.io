@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!--
+=====================================================================
+  HOW TO USE THIS FILE (2 minutes, no tools needed)
+=====================================================================
+  1. On GitHub, open your repository named  YOUR-USERNAME.github.io
+     (create it if it does not exist: it must be named exactly like that).
+  2. Click  Add file  >  Create new file  >  name it  index.html
+  3. Paste this whole file, then click  Commit changes.
+  4. Wait 1-2 minutes, then open  https://YOUR-USERNAME.github.io
+
+  WHAT TO EDIT (use Ctrl+F and search for the word  EDIT:  )
+     - The CONFIG block near the bottom: name, email, GitHub, LinkedIn, CV link
+     - The stats in the About section
+     - The "Now" box
+     - Each project card (status, text, repo name)
+     - The build log timeline and the phase progress bars
+  Everything else works as it is. No frameworks, no libraries, no build step.
+=====================================================================
+-->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Your Name — Computational Engineering Portfolio</title>
+<meta name="description" content="Mechanical engineering graduate building solvers, simulations and engineering software in Python. Statics to FEM, with every idea verified by hand, by code, and by simulation.">
+<meta name="theme-color" content="#0a0f1c">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Your Name — Computational Engineering Portfolio">
+<meta property="og:description" content="Solvers, simulations and engineering software, verified by hand, by code, and by FEA.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230a0f1c'/%3E%3Cpath d='M12 40 Q32 52 52 20' stroke='%235eead4' stroke-width='5' fill='none' stroke-linecap='round'/%3E%3Crect x='8' y='14' width='5' height='36' fill='%235eead4'/%3E%3C/svg%3E">
+
+<script>
+/* Set the theme before the page paints, to avoid a flash. */
+(function () {
+  try {
+    var t = localStorage.getItem("theme");
+    if (!t) {
+      t = (window.matchMedia && matchMedia("(prefers-color-scheme: light)").matches) ? "light" : "dark";
+    }
+    document.documentElement.setAttribute("data-theme", t);
+  } catch (e) {
+    document.documentElement.setAttribute("data-theme", "dark");
+  }
+  document.documentElement.className += " js";
+})();
+</script>
+
+<style>
+  :root[data-theme="dark"] {
+    --bg: #0a0f1c; --bg2: #0f1629; --panel: #121a30; --ink: #e8edf7; --muted: #9aa7c2;
+    --line: #223052; --accent: #5eead4; --accent-ink: #04201c; --warm: #fbbf24;
+    --tension: #fb7185; --compress: #60a5fa; --grid: rgba(120,150,220,.07);
+    --good: #34d399; --prog: #fbbf24; --plan: #93a4c8; --shadow: 0 10px 30px rgba(0,0,0,.35);
+  }
+  :root[data-theme="light"] {
+    --bg: #f6f3ec; --bg2: #efebe1; --panel: #fffdf8; --ink: #14213d; --muted: #55627f;
+    --line: #d9d3c3; --accent: #0f766e; --accent-ink: #ffffff; --warm: #b45309;
+    --tension: #e11d48; --compress: #2563eb; --grid: rgba(20,33,61,.06);
+    --good: #047857; --prog: #b45309; --plan: #55627f; --shadow: 0 10px 30px rgba(20,33,61,.12);
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; scroll-padding-top: 76px; }
+  body {
+    margin: 0; background: var(--bg); color: var(--ink);
+    font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    line-height: 1.65; -webkit-font-smoothing: antialiased;
+  }
+  body::before {
+    content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 0;
+    background-image:
+      linear-gradient(var(--grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+    background-size: 44px 44px;
+    -webkit-mask-image: radial-gradient(ellipse at 50% 0%, #000 30%, transparent 80%);
+            mask-image: radial-gradient(ellipse at 50% 0%, #000 30%, transparent 80%);
+  }
+  [hidden] { display: none !important; }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 6px; }
+  .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace; }
+  .wrap { position: relative; z-index: 1; max-width: 1080px; margin: 0 auto; padding: 0 22px; }
+
+  .skip { position: absolute; left: -999px; top: 8px; background: var(--accent); color: var(--accent-ink);
+          padding: 8px 14px; border-radius: 8px; z-index: 100; }
+  .skip:focus { left: 8px; }
+
+  /* ---------- NAV ---------- */
+  header.nav {
+    position: sticky; top: 0; z-index: 50;
+    background: color-mix(in srgb, var(--bg) 82%, transparent);
+    -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav-in { display: flex; align-items: center; justify-content: space-between; height: 62px; gap: 14px; }
+  .brand { font-weight: 700; letter-spacing: .02em; color: var(--ink); display: flex; align-items: center; gap: 10px; }
+  .brand:hover { text-decoration: none; }
+  .brand .mark { width: 28px; height: 28px; border-radius: 8px; background: var(--accent); color: var(--accent-ink);
+                 display: grid; place-items: center; font-size: 13px; font-weight: 800; }
+  .links { display: flex; align-items: center; gap: 4px; }
+  .links a { color: var(--muted); font-size: 14px; padding: 8px 12px; border-radius: 8px; }
+  .links a:hover, .links a.active { color: var(--ink); background: var(--bg2); text-decoration: none; }
+  .links a.active { box-shadow: inset 0 -2px 0 var(--accent); }
+  .icon-btn {
+    width: 38px; height: 38px; display: grid; place-items: center; cursor: pointer;
+    background: var(--panel); color: var(--ink); border: 1px solid var(--line); border-radius: 10px; font-size: 16px;
+  }
+  .icon-btn:hover { border-color: var(--accent); }
+  #menuBtn { display: none; }
+
+  /* ---------- BUTTONS ---------- */
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px; padding: 11px 18px; border-radius: 10px;
+    font-weight: 600; font-size: 15px; border: 1px solid var(--line); background: var(--panel); color: var(--ink);
+    cursor: pointer; font-family: inherit;
+  }
+  .btn:hover { text-decoration: none; border-color: var(--accent); transform: translateY(-1px); }
+  .btn.primary { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+  .btn.primary:hover { filter: brightness(1.08); }
+
+  /* ---------- SECTIONS ---------- */
+  section { padding: 92px 0 20px; }
+  .eyebrow { font-size: 12px; letter-spacing: .18em; text-transform: uppercase; color: var(--accent); margin: 0 0 10px; }
+  h2 { font-family: ui-serif, Georgia, "Times New Roman", serif; font-weight: 600; font-size: clamp(28px, 4.4vw, 42px);
+       line-height: 1.15; margin: 0 0 22px; }
+  h2 em { color: var(--accent); font-style: italic; }
+  h3 { margin: 0 0 8px; font-size: 18px; }
+  p { margin: 0 0 14px; }
+  .lead { color: var(--muted); font-size: 18px; max-width: 62ch; }
+
+  /* ---------- HERO ---------- */
+  .hero { padding-top: 56px; padding-bottom: 30px; }
+  .hero-grid { display: grid; grid-template-columns: 1.08fr .92fr; gap: 40px; align-items: center; }
+  .role { font-size: 13px; color: var(--muted); letter-spacing: .08em; margin: 0 0 16px; }
+  .role .dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--good);
+               margin-right: 8px; box-shadow: 0 0 0 4px color-mix(in srgb, var(--good) 25%, transparent); }
+  h1 { font-family: ui-serif, Georgia, "Times New Roman", serif; font-weight: 600;
+       font-size: clamp(44px, 8vw, 84px); line-height: 1.02; margin: 0 0 18px; letter-spacing: -.01em; }
+  h1 em { color: var(--accent); font-style: italic; }
+  .tagline { font-size: clamp(17px, 2.1vw, 20px); color: var(--muted); max-width: 52ch; margin-bottom: 20px; }
+  .tags { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 26px; padding: 0; list-style: none; }
+  .tags li { font-size: 12.5px; padding: 5px 11px; border: 1px solid var(--line); border-radius: 999px; color: var(--muted); background: var(--panel); }
+  .cta { display: flex; flex-wrap: wrap; gap: 12px; }
+
+  .sheet { position: relative; background: var(--panel); border: 1px solid var(--line); border-radius: 16px;
+           padding: 14px; box-shadow: var(--shadow); }
+  .sheet::before, .sheet::after { content: ""; position: absolute; width: 16px; height: 16px; border: 2px solid var(--accent); }
+  .sheet::before { top: -6px; left: -6px; border-right: 0; border-bottom: 0; border-radius: 6px 0 0 0; }
+  .sheet::after { bottom: -6px; right: -6px; border-left: 0; border-top: 0; border-radius: 0 0 6px 0; }
+  .sheet canvas { display: block; width: 100%; height: auto; aspect-ratio: 16 / 11; }
+  .titleblock { display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid var(--line); margin-top: 10px; }
+  .titleblock div { padding: 7px 8px; font-size: 11px; color: var(--muted); border-right: 1px solid var(--line); }
+  .titleblock div:nth-child(2n) { border-right: 0; }
+  .titleblock div:nth-child(n+3) { border-top: 1px solid var(--line); }
+  .titleblock b { color: var(--ink); font-weight: 600; }
+
+  /* ---------- ABOUT ---------- */
+  .about-grid { display: grid; grid-template-columns: 1.25fr .75fr; gap: 44px; }
+  .about-grid p { color: var(--muted); font-size: 17px; }
+  .about-grid p strong { color: var(--ink); }
+  .now { border: 1px dashed var(--accent); border-radius: 14px; padding: 18px 20px; background: color-mix(in srgb, var(--accent) 6%, var(--panel)); }
+  .now h3 { font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--accent); }
+  .now dl { margin: 0; display: grid; grid-template-columns: auto 1fr; gap: 6px 14px; font-size: 14.5px; }
+  .now dt { color: var(--muted); } .now dd { margin: 0; }
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 26px; }
+  .stat { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 16px; }
+  .stat b { display: block; font-family: ui-serif, Georgia, serif; font-size: 34px; color: var(--accent); line-height: 1.1; }
+  .stat span { font-size: 13px; color: var(--muted); }
+
+  /* ---------- METHOD ---------- */
+  .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; counter-reset: step; }
+  .step { position: relative; background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 22px 20px 20px; }
+  .step::before { counter-increment: step; content: "0" counter(step); position: absolute; top: 14px; right: 16px;
+                  font-family: ui-monospace, Menlo, Consolas, monospace; color: var(--line); font-size: 30px; font-weight: 700; }
+  .step p { color: var(--muted); font-size: 15px; margin: 0; }
+  .step .eq { margin-top: 12px; font-size: 13px; color: var(--accent); }
+  .method-note { margin-top: 18px; color: var(--muted); font-size: 15px; }
+
+  /* ---------- PROJECTS ---------- */
+  .filters { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin: 0 0 22px; }
+  .chip { font-family: inherit; font-size: 13.5px; padding: 7px 14px; border-radius: 999px; cursor: pointer;
+          background: var(--panel); color: var(--muted); border: 1px solid var(--line); }
+  .chip:hover { color: var(--ink); border-color: var(--accent); }
+  .chip[aria-pressed="true"] { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); font-weight: 600; }
+  #count { margin-left: auto; font-size: 13px; color: var(--muted); }
+  .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .card { display: flex; flex-direction: column; background: var(--panel); border: 1px solid var(--line);
+          border-radius: 14px; padding: 20px; transition: transform .2s, border-color .2s, box-shadow .2s; }
+  .card:hover { transform: translateY(-3px); border-color: var(--accent); box-shadow: var(--shadow); }
+  .card-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; gap: 10px; }
+  .badge { font-size: 11px; letter-spacing: .08em; text-transform: uppercase; padding: 3px 9px; border-radius: 999px; border: 1px solid currentColor; white-space: nowrap; }
+  .badge.shipped { color: var(--good); } .badge.progress { color: var(--prog); } .badge.planned { color: var(--plan); }
+  .where { font-size: 11.5px; color: var(--muted); }
+  .card h3 { font-size: 18px; }
+  .card p { color: var(--muted); font-size: 14.5px; flex: 1; }
+  .card ul { list-style: none; display: flex; flex-wrap: wrap; gap: 6px; margin: 4px 0 14px; padding: 0; }
+  .card li { font-size: 11.5px; padding: 3px 9px; background: var(--bg2); border-radius: 6px; color: var(--muted); }
+  .card .foot { font-size: 13.5px; font-weight: 600; }
+  .card .foot.soon { color: var(--muted); font-weight: 500; }
+  .empty { padding: 26px; border: 1px dashed var(--line); border-radius: 14px; color: var(--muted); text-align: center; }
+
+  /* ---------- BUILD LOG ---------- */
+  .phases { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 38px; }
+  .phase { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 16px; }
+  .phase small { display: block; color: var(--muted); font-size: 12px; margin-bottom: 4px; }
+  .phase b { display: block; margin-bottom: 12px; }
+  .bar { height: 7px; background: var(--bg2); border-radius: 999px; overflow: hidden; }
+  .bar i { display: block; height: 100%; width: var(--p, 0%); background: linear-gradient(90deg, var(--accent), var(--warm)); border-radius: 999px; }
+  .bar-label { font-size: 12px; color: var(--muted); margin-top: 6px; }
+  .timeline { position: relative; list-style: none; margin: 0; padding: 0 0 0 26px; max-width: 760px; }
+  .timeline::before { content: ""; position: absolute; left: 7px; top: 6px; bottom: 6px; width: 2px; background: var(--line); }
+  .timeline li { position: relative; padding: 0 0 24px; }
+  .timeline li::before { content: ""; position: absolute; left: -26px; top: 6px; width: 16px; height: 16px; border-radius: 50%;
+                         background: var(--bg); border: 2px solid var(--line); }
+  .timeline li.done::before { background: var(--accent); border-color: var(--accent); }
+  .timeline li.current::before { border-color: var(--warm); background: var(--warm); box-shadow: 0 0 0 5px color-mix(in srgb, var(--warm) 25%, transparent); }
+  .timeline time { display: block; font-size: 12px; color: var(--muted); letter-spacing: .08em; text-transform: uppercase; }
+  .timeline p { margin: 2px 0 0; color: var(--ink); }
+  .timeline li.next p { color: var(--muted); }
+
+  /* ---------- TOOLKIT ---------- */
+  .kit { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .kit-group { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 18px; }
+  .kit-group h3 { font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--accent); margin-bottom: 12px; }
+  .kit-group div { display: flex; flex-wrap: wrap; gap: 8px; }
+  .kit-group span { font-size: 13.5px; padding: 5px 12px; border-radius: 8px; background: var(--bg2); border: 1px solid var(--line); }
+  .kit-group span.learning { border-style: dashed; color: var(--muted); }
+  .legend { margin-top: 14px; font-size: 13px; color: var(--muted); }
+  .legend span { display: inline-block; padding: 2px 10px; border-radius: 6px; border: 1px solid var(--line); background: var(--bg2); margin-right: 6px; }
+  .legend span.learning { border-style: dashed; }
+
+  /* ---------- CONTACT ---------- */
+  .contact-box { background: var(--panel); border: 1px solid var(--line); border-radius: 18px; padding: 34px; position: relative; overflow: hidden; }
+  .contact-box::after { content: ""; position: absolute; right: -60px; top: -60px; width: 220px; height: 220px; border-radius: 50%;
+                        background: radial-gradient(circle, color-mix(in srgb, var(--accent) 22%, transparent), transparent 70%); }
+  .open ul { margin: 0 0 24px; padding-left: 20px; color: var(--muted); }
+  .contact-links { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 12px; position: relative; z-index: 1; }
+  .contact-links a, .contact-links button {
+    display: flex; align-items: center; gap: 12px; text-align: left; padding: 14px 16px; border-radius: 12px; cursor: pointer;
+    background: var(--bg2); border: 1px solid var(--line); color: var(--ink); font-family: inherit; font-size: 15px;
+  }
+  .contact-links a:hover, .contact-links button:hover { border-color: var(--accent); text-decoration: none; }
+  .contact-links .k { font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 12px; color: var(--accent); min-width: 28px; }
+  .contact-links small { display: block; color: var(--muted); font-size: 12.5px; }
+
+  footer { position: relative; z-index: 1; margin-top: 70px; padding: 26px 0 40px; border-top: 1px solid var(--line); color: var(--muted); font-size: 13.5px; }
+  .foot-in { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px; }
+
+  #toast { position: fixed; left: 50%; bottom: 28px; transform: translate(-50%, 30px); opacity: 0; pointer-events: none; z-index: 200;
+           background: var(--accent); color: var(--accent-ink); padding: 10px 18px; border-radius: 10px; font-weight: 600; font-size: 14px; transition: .25s; }
+  #toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+  /* ---------- REVEAL ---------- */
+  .js .reveal { opacity: 0; transform: translateY(18px); transition: opacity .6s ease, transform .6s ease; }
+  .js .reveal.in { opacity: 1; transform: none; }
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width: 900px) {
+    .hero-grid, .about-grid { grid-template-columns: 1fr; gap: 30px; }
+    .grid, .kit { grid-template-columns: repeat(2, 1fr); }
+    .phases { grid-template-columns: repeat(2, 1fr); }
+    .steps { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 720px) {
+    #menuBtn { display: grid; }
+    .links { position: absolute; top: 62px; left: 0; right: 0; flex-direction: column; align-items: stretch; padding: 10px 22px 16px;
+             background: var(--bg); border-bottom: 1px solid var(--line); display: none; }
+    .links.open { display: flex; }
+    .links a { padding: 12px; }
+  }
+  @media (max-width: 560px) {
+    .grid, .kit, .phases { grid-template-columns: 1fr; }
+    .stats { grid-template-columns: 1fr; }
+    #count { margin-left: 0; width: 100%; }
+    section { padding-top: 70px; }
+    .contact-box { padding: 24px 20px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .js .reveal { opacity: 1; transform: none; transition: none; }
+    .card, .btn, #toast { transition: none; }
+  }
+  @media print {
+    header.nav, .sheet, .filters, #toast, .icon-btn, body::before { display: none !important; }
+    body { background: #fff; color: #000; }
+    .js .reveal { opacity: 1; transform: none; }
+    section { padding-top: 24px; }
+  }
+</style>
+</head>
+
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="#top" aria-label="Back to top">
+      <span class="mark mono" id="monogram">YN</span>
+      <span class="mono" style="font-size:14px;">portfolio<span style="color:var(--accent)">/</span></span>
+    </a>
+    <nav class="links" id="links" aria-label="Main">
+      <a href="#about">about</a>
+      <a href="#method">method</a>
+      <a href="#projects">projects</a>
+      <a href="#log">build log</a>
+      <a href="#toolkit">toolkit</a>
+      <a href="#contact">contact</a>
+    </nav>
+    <div style="display:flex; gap:8px;">
+      <button class="icon-btn" id="themeBtn" aria-label="Switch theme" title="Switch theme"><span class="ico">☾</span></button>
+      <button class="icon-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false">☰</button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+<!-- ===================== HERO ===================== -->
+<div class="wrap hero" id="top">
+  <div class="hero-grid">
+    <div>
+      <p class="role mono"><span class="dot"></span><span data-cfg="role">Mechanical Engineering Graduate · Computational Engineering</span></p>
+      <h1><span data-cfg="firstName">Your</span> <em data-cfg="lastName">Name</em></h1>
+      <p class="tagline">I turn mechanics into software: solvers, simulations and engineering tools that people can trust, because every result is checked by hand, by code, and by simulation.</p>
+      <!-- EDIT: change, add, or remove these focus tags -->
+      <ul class="tags">
+        <li>Python</li><li>Structural mechanics</li><li>Finite element method</li><li>Numerical methods</li><li>Engineering software</li>
+      </ul>
+      <div class="cta">
+        <a class="btn primary" href="#projects">See projects →</a>
+        <a class="btn" href="#log">Read the build log</a>
+        <a class="btn" data-link="cv" href="#" target="_blank" rel="noopener" hidden>Download CV</a>
+      </div>
+    </div>
+
+    <div class="sheet" aria-label="Animated cantilever beam mesh">
+      <canvas id="mesh" role="img" aria-label="A finite element mesh of a cantilever beam bending under a tip load, coloured by bending stress"></canvas>
+      <div class="titleblock mono">
+        <div>DRAWING: <b>cantilever, tip load</b></div>
+        <div>METHOD: <b>beam theory</b></div>
+        <div>COLOUR: <b>bending stress</b></div>
+        <div>STATUS: <b>live in your browser</b></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== ABOUT ===================== -->
+<section id="about">
+  <div class="wrap">
+    <div class="reveal">
+      <p class="eyebrow mono">01 — About</p>
+      <h2>Mechanics, <em>with a keyboard.</em></h2>
+    </div>
+    <div class="about-grid">
+      <div class="reveal">
+        <!-- EDIT: rewrite these paragraphs in your own voice -->
+        <p>I am a <strong>mechanical engineering graduate</strong> teaching myself <strong>computational engineering</strong> in public: statics, mechanics of materials, matrix structural analysis and the finite element method. I write the code for every idea I learn.</p>
+        <p>What pulled me in was a small project: a materials selection tool that ranks materials with Ashby performance indices. It showed me that I want to <strong>build engineering software</strong> that other engineers can rely on, from command-line tools to desktop apps.</p>
+        <p>My long-term goal is to build trusted, niche engineering software and to pursue graduate research in <strong>computational mechanics</strong>.</p>
+        <!-- EDIT: change these numbers as you progress -->
+        <div class="stats">
+          <div class="stat"><b>40</b><span>week learning roadmap, started Oct 2026</span></div>
+          <div class="stat"><b>23</b><span>projects planned, one for each topic</span></div>
+          <div class="stat"><b>3×</b><span>checks per result: hand, code, FEA</span></div>
+        </div>
+      </div>
+      <aside class="reveal">
+        <div class="now">
+          <h3 class="mono">Now</h3>
+          <!-- EDIT: update this box whenever you move on -->
+          <dl>
+            <dt>Studying</dt><dd>Statics: moments and couples</dd>
+            <dt>Building</dt><dd>Moment and force-resultant tool</dd>
+            <dt>Reading</dt><dd>Hibbeler, Engineering Mechanics: Statics</dd>
+            <dt>Next up</dt><dd>Truss solver in Python</dd>
+          </dl>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== METHOD ===================== -->
+<section id="method">
+  <div class="wrap">
+    <div class="reveal">
+      <p class="eyebrow mono">02 — Method</p>
+      <h2>Hand, then code, <em>then software.</em></h2>
+      <p class="lead">Engineering software is only useful if it is correct. So every topic I learn goes through the same three checks.</p>
+    </div>
+    <div class="steps reveal">
+      <div class="step">
+        <h3>Solve it by hand</h3>
+        <p>Free-body diagram, equations, a number with units. If I cannot do it on paper, I do not yet understand it.</p>
+        <div class="eq mono">M = r × F</div>
+      </div>
+      <div class="step">
+        <h3>Verify it in code</h3>
+        <p>Write a tested Python function and compare it with the hand result and the textbook answer.</p>
+        <div class="eq mono">np.cross(r, F)</div>
+      </div>
+      <div class="step">
+        <h3>Check it with simulation</h3>
+        <p>Build the same model in PrePoMax and CalculiX, then compare. Agreement builds trust. Disagreement teaches me something.</p>
+        <div class="eq mono">K u = F</div>
+      </div>
+    </div>
+    <p class="method-note reveal">The goal is a tool whose tests cite their source: a hand calculation, a textbook example, or a simulation result.</p>
+  </div>
+</section>
+
+<!-- ===================== PROJECTS ===================== -->
+<section id="projects">
+  <div class="wrap">
+    <div class="reveal">
+      <p class="eyebrow mono">03 — Projects</p>
+      <h2>Things I am <em>building.</em></h2>
+      <p class="lead">Honest status on every card. Shipped means finished, tested and documented. When a project ships, its badge changes and the repository link goes live.</p>
+    </div>
+
+    <div class="filters reveal" role="group" aria-label="Filter projects by status">
+      <button class="chip" data-filter="all" aria-pressed="true">All</button>
+      <button class="chip" data-filter="shipped" aria-pressed="false">Shipped</button>
+      <button class="chip" data-filter="progress" aria-pressed="false">In progress</button>
+      <button class="chip" data-filter="planned" aria-pressed="false">Planned</button>
+      <span id="count" class="mono" aria-live="polite"></span>
+    </div>
+
+    <!--
+      EDIT: HOW TO CHANGE A PROJECT CARD
+        data-status="shipped" | "progress" | "planned"
+        data-repo="your-repo-name"   (the link becomes github.com/YOUR-USERNAME/your-repo-name)
+        Remove the data-repo attribute and the link shows "Repository coming soon".
+        Copy a whole <article> block to add a new project.
+    -->
+    <div class="grid" id="grid">
+      <article class="card project reveal" data-status="progress" data-repo="material-selector">
+        <div class="card-top"><span class="badge progress mono">In progress</span><span class="where mono">C++ prototype</span></div>
+        <h3>Material Selector</h3>
+        <p>Filters a SQLite materials database with hard constraints and ranks candidates using Ashby performance indices. Being rewritten in Python with validated indices, a command-line tool and a GUI.</p>
+        <ul><li>C++</li><li>SQLite</li><li>Ashby method</li></ul>
+        <span class="foot"></span>
+      </article>
+
+      <article class="card project reveal" data-status="progress" data-repo="moment-tool">
+        <div class="card-top"><span class="badge progress mono">In progress</span><span class="where mono">Statics</span></div>
+        <h3>Moment and Force-Resultant Tool</h3>
+        <p>Command-line tool that computes the moment of a force system about any point using r × F, tested against textbook fundamental problems.</p>
+        <ul><li>Python</li><li>NumPy</li><li>CLI</li><li>pytest</li></ul>
+        <span class="foot"></span>
+      </article>
+
+      <article class="card project reveal" data-status="progress" data-repo="game-of-life">
+        <div class="card-top"><span class="badge progress mono">In progress</span><span class="where mono">Practice lab</span></div>
+        <h3>Conway's Game of Life</h3>
+        <p>Cellular automaton built straight from its four rules, with a study of grid-edge behaviour and tests on known patterns: block, blinker, glider.</p>
+        <ul><li>Python</li><li>NumPy</li><li>Matplotlib</li></ul>
+        <span class="foot"></span>
+      </article>
+
+      <article class="card project reveal" data-status="planned">
+        <div class="card-top"><span class="badge planned mono">Planned</span><span class="where mono">Statics</span></div>
+        <h3>Vector and Moment Visualizer</h3>
+        <p>Interactive plots of dot products, cross products and moment arms, to build intuition for how moments behave.</p>
+        <ul><li>Python</li><li>Matplotlib</li><li>Streamlit</li></ul>
+        <span class="foot"></span>
+      </article>
+
+      <article class="card project reveal" data-status="planned">
+        <div class="card-top"><span class="badge planned mono">Planned</span><span class="where mono">Statics</span></div>
+        <h3>2D Truss Solver</h3>
+        <p>Method-of-joints solver written as a linear system, validated on textbook trusses and checked for determinacy.</p>
+        <ul><li>Python</li><li>NumPy</li><li>pytest</li></ul>
+        <span class="foot"></span>
+      </article>
+
+      <article class="card project reveal" data-status="planned">
+        <div class="card-top"><span class="badge planned mono">Planned</span><span class="where mono">Statics</span></div>
+        <h3>Shear and Bending Moment Diagrams</h3>
+        <p>Reads a beam definition from a JSON file and plots shear force and bending moment diagrams for point and distributed loads.</p>
+        <ul><li>Python</li><li>Matplotlib</li><li>JSON</li></ul>
+        <span class="foot"></span>
+      </article>
+
+      <article class="card project reveal" data-status="planned">
+        <div class="card-top"><span class="badge planned mono">Planned</span><span class="where mono">Numerics</span></div>
+        <h3>Linear Solver from Scratch</h3>
+        <p>Gaussian elimination with partial pivoting, compared with NumPy and tested on ill-conditioned matrices. The engine under every FEM program.</p>
+        <ul><li>Python</li><li>Linear algebra</li><li>Testing</li></ul>
+        <span class="foot"></span>
+      </article>
+
+      <article class="card project reveal" data-status="planned">
+        <div class="card-top"><span class="badge planned mono">Planned</span><span class="where mono">FEM</span></div>
+        <h3>2D Finite Element Solver</h3>
+        <p>Plane-stress solver with triangle and quadrilateral elements, validated on a plate with a hole against theory and CalculiX.</p>
+        <ul><li>Python</li><li>FEM</li><li>CalculiX</li><li>Gmsh</li></ul>
+        <span class="foot"></span>
+      </article>
+
+      <article class="card project reveal" data-status="planned">
+        <div class="card-top"><span class="badge planned mono">Planned</span><span class="where mono">Capstone</span></div>
+        <h3>Structural Analyzer</h3>
+        <p>Desktop app for truss, beam and frame analysis built on my own solvers, with save and load, plots, PDF reports and an installer.</p>
+        <ul><li>Python</li><li>PySide6</li><li>FEM</li><li>Desktop</li></ul>
+        <span class="foot"></span>
+      </article>
+    </div>
+    <div class="empty" id="empty" hidden>Nothing here yet. The first release is on the way.</div>
+  </div>
+</section>
+
+<!-- ===================== BUILD LOG ===================== -->
+<section id="log">
+  <div class="wrap">
+    <div class="reveal">
+      <p class="eyebrow mono">04 — Build log</p>
+      <h2>The plan, <em>in the open.</em></h2>
+      <p class="lead">Four phases, one for each layer of the foundation. The bars show where I actually am.</p>
+    </div>
+
+    <!-- EDIT: change --p to update progress, for example style="--p:35%" -->
+    <div class="phases reveal">
+      <div class="phase"><small class="mono">Oct – Dec 2026</small><b>1 · Statics</b><div class="bar"><i style="--p:5%"></i></div><div class="bar-label mono">5%</div></div>
+      <div class="phase"><small class="mono">Dec 2026 – Feb 2027</small><b>2 · Mechanics of Materials</b><div class="bar"><i style="--p:0%"></i></div><div class="bar-label mono">0%</div></div>
+      <div class="phase"><small class="mono">Feb – Apr 2027</small><b>3 · Matrix Analysis</b><div class="bar"><i style="--p:0%"></i></div><div class="bar-label mono">0%</div></div>
+      <div class="phase"><small class="mono">Apr – Jul 2027</small><b>4 · Finite Element Method</b><div class="bar"><i style="--p:0%"></i></div><div class="bar-label mono">0%</div></div>
+    </div>
+
+    <!-- EDIT: add new entries at the top of the "done"/"now" part. Use class done, current, or next -->
+    <ol class="timeline reveal">
+      <li class="next"><time class="mono">Jul 2027</time><p>Phase 4 complete: finite element method, and Structural Analyzer v1.0 released.</p></li>
+      <li class="next"><time class="mono">Apr 2027</time><p>Phase 3 complete: truss, beam and frame solvers using the stiffness method.</p></li>
+      <li class="next"><time class="mono">Feb 2027</time><p>Phase 2 complete: mechanics of materials, plus my first desktop interface.</p></li>
+      <li class="next"><time class="mono">Dec 2026</time><p>Phase 1 checkpoint: statics mastered and the first five tools on GitHub.</p></li>
+      <li class="current"><time class="mono">Now</time><p>Statics chapter 4: moments and couples. Learning to set up r × F problems and verify each one in code.</p></li>
+      <li class="done"><time class="mono">Oct 2026</time><p>Started a 40-week computational engineering roadmap: statics, mechanics of materials, matrix analysis, FEM, with a Python project for every topic.</p></li>
+      <li class="done"><time class="mono">Oct 2026</time><p>Built a Material Selector prototype in C++ with a SQLite database, hard-constraint filtering and Ashby indices. It is what made me want to build engineering software.</p></li>
+    </ol>
+  </div>
+</section>
+
+<!-- ===================== TOOLKIT ===================== -->
+<section id="toolkit">
+  <div class="wrap">
+    <div class="reveal">
+      <p class="eyebrow mono">05 — Toolkit</p>
+      <h2>What I work <em>with.</em></h2>
+    </div>
+    <!-- EDIT: move a skill from class="learning" to plain <span> once you have used it in a real project -->
+    <div class="kit reveal">
+      <div class="kit-group"><h3 class="mono">Languages</h3><div>
+        <span>Python</span><span>C++</span><span>SQL</span><span class="learning">C++ (solvers)</span></div></div>
+      <div class="kit-group"><h3 class="mono">Scientific stack</h3><div>
+        <span class="learning">NumPy</span><span class="learning">SciPy</span><span class="learning">Matplotlib</span><span class="learning">pandas</span><span class="learning">pytest</span></div></div>
+      <div class="kit-group"><h3 class="mono">Interfaces</h3><div>
+        <span class="learning">Typer (CLI)</span><span class="learning">Streamlit</span><span class="learning">PySide6 (Qt)</span><span class="learning">Tkinter</span></div></div>
+      <div class="kit-group"><h3 class="mono">Simulation</h3><div>
+        <span class="learning">PrePoMax</span><span class="learning">CalculiX</span><span class="learning">Gmsh</span><span class="learning">Finite element method</span></div></div>
+      <div class="kit-group"><h3 class="mono">Engineering</h3><div>
+        <span>Statics</span><span class="learning">Mechanics of materials</span><span class="learning">Matrix structural analysis</span><span class="learning">Numerical methods</span></div></div>
+      <div class="kit-group"><h3 class="mono">Workflow</h3><div>
+        <span>Git</span><span>GitHub</span><span>SQLite</span><span class="learning">GitHub Actions</span></div></div>
+    </div>
+    <p class="legend reveal"><span>Using</span><span class="learning">Learning now</span> I list what I am learning honestly, and update the list as projects ship.</p>
+  </div>
+</section>
+
+<!-- ===================== CONTACT ===================== -->
+<section id="contact">
+  <div class="wrap">
+    <div class="contact-box reveal">
+      <p class="eyebrow mono">06 — Contact</p>
+      <h2>Let's <em>talk.</em></h2>
+      <div class="open">
+        <p class="lead" style="margin-bottom:12px;">I am open to:</p>
+        <!-- EDIT: change what you are open to -->
+        <ul>
+          <li>Graduate engineering and junior software or data roles</li>
+          <li>Freelance work on engineering calculation tools and automation</li>
+          <li>Feedback, mentorship, and collaboration on open-source engineering software</li>
+        </ul>
+      </div>
+      <div class="contact-links">
+        <button id="copyEmail" type="button"><span class="k">@</span><span>Copy email<small data-cfg="email">you@example.com</small></span></button>
+        <a data-link="github" href="#" target="_blank" rel="noopener"><span class="k">gh/</span><span>GitHub<small>Source code and projects</small></span></a>
+        <a data-link="linkedin" href="#" target="_blank" rel="noopener"><span class="k">in/</span><span>LinkedIn<small>Professional profile</small></span></a>
+        <a data-link="cv" href="#" target="_blank" rel="noopener" hidden><span class="k">cv/</span><span>CV<small>Download as PDF</small></span></a>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap foot-in">
+    <span><span data-cfg="firstName">Your</span> <span data-cfg="lastName">Name</span> · <span data-cfg="location">City, Country</span> · <span id="year">2026</span></span>
+    <span class="mono">Mechanical engineering · Computational mechanics · Built by hand with HTML, CSS and a little JavaScript</span>
+  </div>
+</footer>
+
+<div id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function () {
+  "use strict";
+
+  /* =================================================================
+     EDIT: CONFIG. Change these values, and the whole page updates.
+     ================================================================= */
+  var CONFIG = {
+    firstName: "Your",
+    lastName: "Name",
+    role: "Mechanical Engineering Graduate · Computational Engineering",
+    location: "City, Country",
+    email: "you@example.com",
+    github: "your-github-username",                    // only the username, not the full link
+    linkedin: "https://www.linkedin.com/in/your-profile/",
+    cvUrl: ""                                          // paste a link to your CV, or leave "" to hide the CV buttons
+  };
+  /* ================================================================= */
+
+  function $(s, c) { return (c || document).querySelector(s); }
+  function $$(s, c) { return Array.prototype.slice.call((c || document).querySelectorAll(s)); }
+  var root = document.documentElement;
+
+  /* ---------- Fill in the CONFIG values ---------- */
+  $$("[data-cfg]").forEach(function (el) {
+    var k = el.getAttribute("data-cfg");
+    if (CONFIG[k]) el.textContent = CONFIG[k];
+  });
+  var ghUrl = "https://github.com/" + CONFIG.github;
+  $$("[data-link]").forEach(function (el) {
+    var k = el.getAttribute("data-link"), href = "";
+    if (k === "github") href = ghUrl;
+    if (k === "linkedin") href = CONFIG.linkedin;
+    if (k === "cv") href = CONFIG.cvUrl;
+    if (href) { el.setAttribute("href", href); el.hidden = false; } else { el.hidden = true; }
+  });
+  document.title = CONFIG.firstName + " " + CONFIG.lastName + " — Computational Engineering Portfolio";
+  $("#monogram").textContent = (CONFIG.firstName.charAt(0) + CONFIG.lastName.charAt(0)).toUpperCase();
+  $("#year").textContent = new Date().getFullYear();
+
+  /* ---------- Project links ---------- */
+  $$(".project").forEach(function (card) {
+    var repo = card.getAttribute("data-repo"), foot = $(".foot", card);
+    if (repo) {
+      foot.innerHTML = "";
+      var a = document.createElement("a");
+      a.href = ghUrl + "/" + repo; a.target = "_blank"; a.rel = "noopener";
+      a.textContent = "View repository →";
+      foot.appendChild(a);
+    } else {
+      foot.className = "foot soon"; foot.textContent = "Repository coming soon";
+    }
+  });
+
+  /* ---------- Toast ---------- */
+  var toastEl = $("#toast"), toastTimer;
+  function toast(msg) {
+    toastEl.textContent = msg; toastEl.classList.add("show");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { toastEl.classList.remove("show"); }, 2200);
+  }
+
+  /* ---------- Theme ---------- */
+  var themeBtn = $("#themeBtn");
+  function setTheme(t, save) {
+    root.setAttribute("data-theme", t);
+    if (save) { try { localStorage.setItem("theme", t); } catch (e) {} }
+    themeBtn.setAttribute("aria-label", "Switch to " + (t === "dark" ? "light" : "dark") + " theme");
+    $(".ico", themeBtn).textContent = t === "dark" ? "☾" : "☀";
+    var meta = $('meta[name="theme-color"]');
+    if (meta) meta.setAttribute("content", t === "dark" ? "#0a0f1c" : "#f6f3ec");
+    refreshColors();
+    if (reduceMotion || !running) drawFrame(0);
+  }
+  themeBtn.addEventListener("click", function () {
+    setTheme(root.getAttribute("data-theme") === "dark" ? "light" : "dark", true);
+  });
+
+  /* ---------- Mobile menu ---------- */
+  var links = $("#links"), menuBtn = $("#menuBtn");
+  menuBtn.addEventListener("click", function () {
+    var open = links.classList.toggle("open");
+    menuBtn.setAttribute("aria-expanded", open ? "true" : "false");
+  });
+  $$("#links a").forEach(function (a) {
+    a.addEventListener("click", function () { links.classList.remove("open"); menuBtn.setAttribute("aria-expanded", "false"); });
+  });
+
+  /* ---------- Scroll spy and reveal ---------- */
+  if ("IntersectionObserver" in window) {
+    var spy = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) {
+          $$("#links a").forEach(function (a) {
+            a.classList.toggle("active", a.getAttribute("href") === "#" + e.target.id);
+          });
+        }
+      });
+    }, { rootMargin: "-45% 0px -50% 0px" });
+    $$("main section[id]").forEach(function (s) { spy.observe(s); });
+
+    var rev = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add("in"); rev.unobserve(e.target); } });
+    }, { threshold: 0.12 });
+    $$(".reveal").forEach(function (el) { rev.observe(el); });
+  } else {
+    $$(".reveal").forEach(function (el) { el.classList.add("in"); });
+  }
+
+  /* ---------- Project filter ---------- */
+  var chips = $$(".chip[data-filter]"), cards = $$(".project");
+  function applyFilter(f) {
+    var n = 0;
+    cards.forEach(function (c) {
+      var show = f === "all" || c.getAttribute("data-status") === f;
+      c.hidden = !show; if (show) n++;
+    });
+    chips.forEach(function (ch) { ch.setAttribute("aria-pressed", ch.getAttribute("data-filter") === f ? "true" : "false"); });
+    $("#count").textContent = "Showing " + n + " of " + cards.length;
+    $("#empty").hidden = n !== 0;
+  }
+  chips.forEach(function (ch) { ch.addEventListener("click", function () { applyFilter(ch.getAttribute("data-filter")); }); });
+  applyFilter("all");
+
+  /* ---------- Copy email ---------- */
+  $("#copyEmail").addEventListener("click", function () {
+    var text = CONFIG.email;
+    function fallback() {
+      var ta = document.createElement("textarea");
+      ta.value = text; ta.setAttribute("readonly", "");
+      ta.style.position = "fixed"; ta.style.opacity = "0";
+      document.body.appendChild(ta); ta.select();
+      try { document.execCommand("copy"); toast("Email copied"); } catch (e) { toast(text); }
+      document.body.removeChild(ta);
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(function () { toast("Email copied"); }, fallback);
+    } else { fallback(); }
+  });
+
+  /* ================================================================
+     Hero animation: a cantilever beam mesh bending under a tip load.
+     Tension and compression are coloured from beam theory.
+     ================================================================ */
+  var canvas = $("#mesh"), ctx = canvas.getContext("2d");
+  var reduceMotion = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var W = 0, H = 0, running = false, onScreen = true, raf = 0, colors = {};
+
+  function hexToRgb(h) {
+    h = h.replace("#", "").trim();
+    if (h.length === 3) h = h[0] + h[0] + h[1] + h[1] + h[2] + h[2];
+    var n = parseInt(h, 16);
+    return [(n >> 16) & 255, (n >> 8) & 255, n & 255];
+  }
+  function rgba(c, a) { return "rgba(" + c[0] + "," + c[1] + "," + c[2] + "," + a + ")"; }
+  function refreshColors() {
+    var cs = getComputedStyle(root);
+    function g(n) { return hexToRgb(cs.getPropertyValue(n)); }
+    colors = { ink: g("--ink"), muted: g("--muted"), line: g("--line"), accent: g("--accent"),
+               tension: g("--tension"), compress: g("--compress"), panel: g("--panel") };
+  }
+  function resize() {
+    var r = canvas.getBoundingClientRect();
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    W = r.width; H = r.height;
+    canvas.width = Math.max(1, Math.round(W * dpr));
+    canvas.height = Math.max(1, Math.round(H * dpr));
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+
+  function drawFrame(t) {
+    if (!W || !H) return;
+    var amp = reduceMotion ? 0.7 : Math.sin(t * 1.15) * 0.92;
+    var nx = 20, ny = 4;
+    var x0 = W * 0.14, x1 = W * 0.93;
+    var yTop = H * 0.34, bh = H * 0.19, dmax = H * 0.27;
+    ctx.clearRect(0, 0, W, H);
+
+    function node(i, j) {
+      var xi = i / nx, yy = j / ny;
+      var v = amp * dmax * (3 * xi * xi - xi * xi * xi) / 2;      /* cantilever deflection shape */
+      return [x0 + (x1 - x0) * xi, yTop + bh * yy + v];
+    }
+
+    /* original (undeformed) outline */
+    ctx.setLineDash([5, 5]); ctx.strokeStyle = rgba(colors.muted, 0.45); ctx.lineWidth = 1;
+    ctx.strokeRect(x0, yTop, x1 - x0, bh); ctx.setLineDash([]);
+
+    /* mesh triangles coloured by bending stress */
+    function tri(a, b, c, s) {
+      ctx.beginPath(); ctx.moveTo(a[0], a[1]); ctx.lineTo(b[0], b[1]); ctx.lineTo(c[0], c[1]); ctx.closePath();
+      ctx.fillStyle = rgba(colors.ink, 0.05); ctx.fill();
+      ctx.fillStyle = rgba(s > 0 ? colors.tension : colors.compress, Math.min(0.9, Math.abs(s) * 1.05)); ctx.fill();
+      ctx.strokeStyle = rgba(colors.line, 0.9); ctx.lineWidth = 0.8; ctx.stroke();
+    }
+    for (var i = 0; i < nx; i++) {
+      for (var j = 0; j < ny; j++) {
+        var a = node(i, j), b = node(i + 1, j), c = node(i + 1, j + 1), d = node(i, j + 1);
+        var s = amp * (1 - (i + 0.5) / nx) * (1 - 2 * (j + 0.5) / ny);   /* moment falls to zero at the free end */
+        tri(a, b, d, s); tri(b, c, d, s);
+      }
+    }
+
+    /* fixed wall with hatching */
+    ctx.strokeStyle = rgba(colors.ink, 0.9); ctx.lineWidth = 2.5;
+    ctx.beginPath(); ctx.moveTo(x0, yTop - 14); ctx.lineTo(x0, yTop + bh + 14); ctx.stroke();
+    ctx.lineWidth = 1.2; ctx.strokeStyle = rgba(colors.muted, 0.9);
+    for (var k = 0; k <= 8; k++) {
+      var yy = yTop - 14 + k * (bh + 28) / 8;
+      ctx.beginPath(); ctx.moveTo(x0, yy); ctx.lineTo(x0 - 10, yy + 10); ctx.stroke();
+    }
+
+    /* tip load arrow */
+    var tip = node(nx, ny / 2), dir = amp >= 0 ? 1 : -1, len = 16 + 38 * Math.abs(amp);
+    var sy = tip[1] - dir * len;
+    ctx.strokeStyle = rgba(colors.accent, 1); ctx.fillStyle = rgba(colors.accent, 1); ctx.lineWidth = 2.2;
+    ctx.beginPath(); ctx.moveTo(tip[0], sy); ctx.lineTo(tip[0], tip[1] - dir * 6); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(tip[0], tip[1]); ctx.lineTo(tip[0] - 5, tip[1] - dir * 11); ctx.lineTo(tip[0] + 5, tip[1] - dir * 11); ctx.closePath(); ctx.fill();
+    ctx.font = "600 12px ui-monospace, Menlo, Consolas, monospace";
+    ctx.fillText("F", tip[0] + 9, sy + (dir > 0 ? 10 : -2));
+
+    /* dimension line */
+    var dy = H * 0.84;
+    ctx.strokeStyle = rgba(colors.muted, 0.9); ctx.fillStyle = rgba(colors.muted, 1); ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(x0, dy); ctx.lineTo(x1, dy);
+    ctx.moveTo(x0, dy - 6); ctx.lineTo(x0, dy + 6); ctx.moveTo(x1, dy - 6); ctx.lineTo(x1, dy + 6); ctx.stroke();
+    ctx.font = "11px ui-monospace, Menlo, Consolas, monospace";
+    ctx.textAlign = "center"; ctx.fillText("L", (x0 + x1) / 2, dy - 6); ctx.textAlign = "left";
+
+    /* legend */
+    var ly = H - 12;
+    ctx.fillStyle = rgba(colors.tension, 1); ctx.fillRect(x0 - 4, ly - 8, 9, 9);
+    ctx.fillStyle = rgba(colors.muted, 1); ctx.fillText("tension", x0 + 10, ly);
+    ctx.fillStyle = rgba(colors.compress, 1); ctx.fillRect(x0 + 72, ly - 8, 9, 9);
+    ctx.fillStyle = rgba(colors.muted, 1); ctx.fillText("compression", x0 + 86, ly);
+  }
+
+  function loop(ms) {
+    if (!running) return;
+    drawFrame(ms / 1000);
+    raf = requestAnimationFrame(loop);
+  }
+  function start() { if (reduceMotion || running || !onScreen || document.hidden) return; running = true; raf = requestAnimationFrame(loop); }
+  function stop() { running = false; cancelAnimationFrame(raf); }
+
+  refreshColors(); resize(); drawFrame(0);
+  window.addEventListener("resize", function () { resize(); if (!running) drawFrame(0); });
+  document.addEventListener("visibilitychange", function () { document.hidden ? stop() : start(); });
+  if ("IntersectionObserver" in window) {
+    new IntersectionObserver(function (es) { onScreen = es[0].isIntersecting; onScreen ? start() : stop(); }).observe(canvas);
+  }
+  setTheme(root.getAttribute("data-theme") || "dark", false);
+  start();
+})();
+</script>
+</body>
+</html>
